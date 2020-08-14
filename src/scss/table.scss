@@ -39,22 +39,23 @@
     min-width: 40px;
     width: $cell-width;
     border: 1px solid $border-color;
-    border-top: none;
-    border-left: none;
+    border-top: 0;
+    border-left: 0;
     height: 100%;
   }
 
-  .ceil {
+  .cell {
     min-width: 40px;
     padding: 5px;
     width: $cell-width;
     height: 100%;
     border: 1px solid #e2e3e3;
-    border-top: none;
-    border-left: none;
+    border-top: 0;
+    border-left: 0;
     color: #111;
     white-space: nowrap;
     outline: none;
+
 
     &.selected {
       border: none;
@@ -62,4 +63,5 @@
       z-index: 2;
     }
   }
+
 }
