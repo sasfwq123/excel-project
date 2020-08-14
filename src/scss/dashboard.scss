@@ -34,7 +34,7 @@
     align-items: center;
     font-size: 1.5rem;
     text-decoration: none;
-    color: black;
+    color: #000;
     text-align: center;
 
     &:hover {
@@ -51,7 +51,6 @@
 
   &__table {
     padding: 1rem;
-
   }
 
   &__list-header {
@@ -91,4 +90,5 @@
       }
     }
   }
+
 }
