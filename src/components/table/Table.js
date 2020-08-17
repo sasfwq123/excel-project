@@ -1,10 +1,26 @@
-import {ExcelComponent} from '@core/ExcelComponent'
-import {createTable} from '@/components/table/table.template'
+/* eslint-disable */
+import {ExcelComponent} from "@core/ExcelComponent";
+import {createTable} from "@/components/table/table.template";
+import {resizeHandler} from "@/components/table/table.resize";
+import {shouldResize} from "@/components/table/table.function";
 
 export class Table extends ExcelComponent {
-  static className = 'excel__table'
+    static className = "excel__table";
 
-  toHTML() {
-    return createTable(20)
-  }
+    constructor($root) {
+        super($root, {
+            name: "Table",
+            listeners: ["mousedown"]
+        });
+    }
+
+    toHTML() {
+        return createTable(20);
+    }
+
+    onMousedown(event) {
+        if (shouldResize(event)) {
+            resizeHandler(this.$root, event);
+        }
+    }
 }
