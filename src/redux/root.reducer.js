@@ -1,5 +1,5 @@
 /* eslint-disable */
-import {storage} from "@core/utils";
+import {clone, storage} from "@core/utils";
 import {defaultStyles, defaultTitle} from "@/constants";
 
 const TABLE_RESIZE = "TABLE_RESIZE";
@@ -7,6 +7,7 @@ const CHANGE_TEXT = "CHANGE_TEXT";
 const CHANGE_STYLES = "CHANGE_STYLES";
 const APPLY_STYLE = "APPLY_STYLE";
 const CHANGE_TITLE = "CHANGE_TITLE";
+const UPDATE_DATE = "UPDATE_DATE";
 
 const state = {
     rowState: {},
@@ -15,7 +16,8 @@ const state = {
     stylesState: {},
     currentText: "",
     currentStyles: defaultStyles,
-    title: defaultTitle
+    title: defaultTitle,
+    openedData: new Date().toJSON()
 };
 
 const normalize = (state) => ({
@@ -24,9 +26,9 @@ const normalize = (state) => ({
     currentText: ""
 });
 
-export const initialState = storage("excel-state")
-    ? normalize(storage("excel-state"))
-    : state;
+export const normalizeInitialState = (states) => {
+    return states ? normalize(states) : clone(state);
+};
 
 function value(state, field, action) {
     const val = state[field] || {};
@@ -72,6 +74,11 @@ export const rootReducer = (state = state, action) => {
                 ...state,
                 title: action.data,
             };
+        case UPDATE_DATE:
+            return {
+                ...state,
+                openedData: new Date().toJSON()
+            };
         default:
             return state;
     }
@@ -82,3 +89,4 @@ export const changeText = (data) => ({type: CHANGE_TEXT, data});
 export const changeStyles = (data) => ({type: CHANGE_STYLES, data});
 export const applyStyle = (data) => ({type: APPLY_STYLE, data});
 export const changeTitle = (data) => ({type: CHANGE_TITLE, data});
+export const updateDate = () => ({type: UPDATE_DATE});
