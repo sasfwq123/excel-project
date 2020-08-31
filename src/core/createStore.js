@@ -1,54 +1,23 @@
 /* eslint-disable */
-export class createStore {
-    constructor(rootReducer, initialState = {}) {
-        this.state = rootReducer({...initialState}, {type: "__INIT__"});
-        this.listeners = [];
-        this.rootReducer = rootReducer;
-    }
+export function createStore(rootReducer, initialState = {}) {
+    let state = rootReducer({...initialState}, {type: "__INIT__"});
+    let listeners = [];
 
-    subscribe(func) {
-        this.listeners.push(func);
-        return {
-            unsubscribe() {
-                this.listeners = this.listeners.filter(l => l !== func);
-            }
-        };
-    }
-
-    dispatch(action) {
-        this.state = this.rootReducer(this.state, action);
-        this.listeners.forEach(listeners => listeners(this.state));
-    }
-
-    getState() {
-        return JSON.parse(JSON.stringify(this.state));
-    }
+    return {
+        subscribe(fn) {
+            listeners.push(fn);
+            return {
+                unsubscribe() {
+                    listeners = listeners.filter(l => l !== fn);
+                }
+            };
+        },
+        dispatch(action) {
+            state = rootReducer(state, action);
+            listeners.forEach(listener => listener(state));
+        },
+        getState() {
+            return JSON.parse(JSON.stringify(state));
+        }
+    };
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
